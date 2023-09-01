@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>I like variational calculus!</h1>
+  <form action="" id="myForm">
+    <input type="text" id="contentBody" name="contentBody" required>
+    <button type="submit">Submit</button>
+  </form>
+  <div>
+    <h2>Comments</h2>
+    <ul id="comments"></ul>
+  </div>
+  <script>
+    const ul = document.getElementById('comments');
+    const list = document.createDocumentFragment();
+    
+    fetch("http://localhost:5000/comments")
+      .then((response) => response.json())
+      .then((data) => {
+        const comments = data
+
+        comments.map(comment => {
+          let li = document.createElement('li');
+          let content = document.createElement('p');
+
+          content.innerHTML = `${comment.Body}`;
+
+          li.appendChild(content);
+          list.appendChild(li);
+        });
+
+        ul.appendChild(list);
+
+        console.log(comments)}
+      )
+      .catch((error) => console.log(error))
+  </script>
+</body>
+</html>

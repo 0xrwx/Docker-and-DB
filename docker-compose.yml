@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: "mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: someone
+    ports:
+      - '3306:3306'
+    volumes:
+      - '/home/onesayd/unix:/var/lib/mysql'
+  web:
+    build: .
+    environment:
+      MYSQL_DATABASE: someone
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
+    ports:
+      - "5000:8080"
+    depends_on:
+      - db
+volumes:
+  db:
